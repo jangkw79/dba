@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="befa65fc-b6a7-44c3-89c2-efb3d4592692" name="dba" url="http://bkpmon.com">
+        <fileTransfer host="10.1.11.13" port="22" privateKey="$USER_HOME$/.ssh/aws_korea_isnsteam.pem" rootFolder="/data/www" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
