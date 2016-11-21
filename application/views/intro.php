@@ -1,3 +1,0 @@
-welcome.
-
-Start here!
