@@ -32,8 +32,9 @@ class Api extends REST_Controller {
         $this->methods['users_post']['limit'] = 100; // 100 requests per hour per user/key
         $this->methods['users_delete']['limit'] = 50; // 50 requests per hour per user/key
 
-        $this->masterdb = "BkpmonMaster";
-        $this->slavedb  = "BkpmonSlave";
+        $this->masterdb = MASTER;
+        $this->slavedb  = SLAVE;
+        $this->instances = INSTANCES;
         $this->regdate  = date("Y-m-d H:i:s");
     }
 
@@ -48,16 +49,46 @@ class Api extends REST_Controller {
             }
         }
 
-        // $data["HOSTNAME"]   = $this->post('hostname');
-        $data["REGDATE"]    = $regdate;
-        // $data["LOCATION"]   = $this->post("location");
-        $res = $this->rest->db->insert($this->masterdb, $data);
+        // Duplicate Check.
+        $dup = $this->index_get($this->masterdb, $data);
+
+        if($dup < 1) {
+            $data["REGDATE"] = $regdate;
+            $res = $this->rest->db->insert($this->masterdb, $data);
+            $this->set_response(null,REST_Controller::HTTP_OK);
+            echo "dup";
+        } else {
+            $this->set_response(null,REST_Controller::HTTP_CONFLICT);
+            echo "not input";
+        }
+    }
+
+    public function index_get($tbl,$arr = false) {
+        if($arr !== false) {
+            $this->rest->db->select(" SEQ");
+            foreach($arr as $k => $v) {
+                $this->rest->db->where($k, $v);
+            }
+        }
+        $query = $this->rest->db->get($tbl);
+        // echo $this->rest->db->last_query();
+        return $query->num_rows();
+    }
+
+    public function init_post() {
+        if($this->post()) {
+            foreach($this->post() as $k => $v) {
+                $data[$k]   = $v;
+            }
+        }
+        $res = $this->rest->db->insert($this->instances, $data);
 
         if($res) {
             $this->set_response($res,REST_Controller::HTTP_OK);
         } else {
             $this->set_response($res,REST_Controller::HTTP_CONFLICT);
         }
+
     }
 
     public function detail_post() {

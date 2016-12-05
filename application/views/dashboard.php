@@ -21,7 +21,7 @@
         <!-- Main content -->
         <section class="content">
             <!-- Small boxes (Stat box) -->
-            <?php $this->load->view('summary'); ?>
+            <?php $this->view('summary'); ?>
             <!-- /.row -->
             <!-- Main row -->
             <div class="row">

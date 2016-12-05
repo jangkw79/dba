@@ -3,7 +3,7 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3>36</h3>
+                <h3><?php echo count($instances); ?></h3>
 
                 <p>총 대상 </p>
             </div>
@@ -18,7 +18,7 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>53</h3>
+                <h3><?php echo $s_status; ?></h3>
                 <p>정상</p>
             </div>
             <div class="icon">
