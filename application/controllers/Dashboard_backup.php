@@ -10,11 +10,10 @@ class Dashboard extends CI_Controller {
         parent::__construct();
 
         $this->load->model("dashboard_model");
-        $this->load->helper("url");
+        $this->load->helper("date");
 
         $this->regdate  = date("Y-m-d");
-
-        $this->sql = "select bi.* , bm.BACKUPSTATUS, bm.SEQ
+        $this->sql = "select *
                           ,(
                             select count(*)  from BkpmonInstancesInfo
                             where DBTYPE = 'Maria'
@@ -29,32 +28,37 @@ class Dashboard extends CI_Controller {
                           ) as mssql
                           from BkpmonInstancesInfo as bi
                             left join (
-                                  SELECT bm.HOSTNAME as host, bm.DBNAME as dname, bm.BACKUPSTATUS, bm.SEQ as seq
+                                  SELECT bm.HOSTNAME, bm.DBNAME, bm.BACKUPSTATUS, bm.SEQ
                                                                 from BkpmonInstancesInfo as bi
                                   inner join BkpmonMaster AS bm
                                   ON bi.HOSTNAME = bm.HOSTNAME AND bi.DBNAME = bm.DBNAME
                                   WHERE date_format(bm.REGDATE, '%Y-%m-%d') = '".$this->regdate."'
                                       ) as bm
-                              ON bi.HOSTNAME = bm.host AND bi.DBNAME = bm.dname order by bi.DBNAME, bm.BACKUPSTATUS asc";
+                              ON bi.HOSTNAME = bm.HOSTNAME AND bi.DBNAME = bm.DBNAME";
     }
 
     public function index()
     {
-        $data["instances"]   = $this->dashboard_model->query($this->sql)->result();
+        $data["instances"]   = $this->dashboard_model->get(INSTANCES)->result();
 
         foreach($data["instances"] as $k => $v) {
-            switch($v->DBTYPE) {
-                case "Maria"   : $data["maria"][]  = $v; break;
-                case "Oracle"  : $data["oracle"][] = $v; break;
-                case "Mssql"   : $data["mssql"][]  = $v; break;
+            foreach($v as $key => $val) {
+                switch($val) {
+                    case "Maria"   : $data["maria"][]  = $v; break;
+                    case "Oracle"  : $data["oracle"][] = $v; break;
+                    case "Mssql"   : $data["mssql"][]  = $v; break;
+                }
             }
         }
 
-        $data["item"] = $this->reordering($data["instances"]);
+        $instances = $this->dashboard_model->get_data(MASTER)->result();
+        $data["item"] = $this->reordering($instances);
 
         $data["item"]["summary"]["instances"] = count($data["instances"]);
         $data["item"]["summary"]["ing"] = $data["item"]["summary"]["instances"] - $data["item"]["summary"]["success"] - $data["item"]["summary"]["fail"];
-
+/*echo "<pre>";
+echo $data["item"]["summary"]["instances"];
+print_r($data);*/
         $this->load->view('dashboard',$data);
     }
 

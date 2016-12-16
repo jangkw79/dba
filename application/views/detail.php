@@ -2,7 +2,6 @@
 <?php $this->load->view('inc/top'); ?>
 
 
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="min-height:901px">
     <!-- Content Header (Page header) -->
@@ -33,15 +32,15 @@
                                 <tbody>
                                     <tr>
                                         <th style="width:50%">Host IP:</th>
-                                        <td>172.13.11.22</td>
+                                        <td><?php echo $instance->HOSTNAME;;?></td>
                                     </tr>
                                     <tr>
                                         <th>Total Disk Size:</th>
-                                        <td>1.5T</td>
+                                        <td><?php echo $instance->STORAGESIZE; ?>G</td>
                                     </tr>
                                     <tr>
                                         <th>Usage :</th>
-                                        <td>320Gb</td>
+                                        <td>24Gb</td>
                                     </tr>
                                     <tr>
                                         <th>Spec:</th>
@@ -67,51 +66,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php foreach($item as $k => $v) { ?>
                                     <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
+                                        <td><?php echo date("Y-m-d", strtotime($v->REGDATE)); ?></td>
+                                        <td><?php echo $v->FILENAME; ?></td>
+                                        <td>file size : <?php echo formatSizeUnits($v->FILESIZE); ?></td>
                                     </tr>
-                                    <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2016-10-21</td>
-                                        <td>/backup/db/storege.dump</td>
-                                        <td>file size : 482MB</td>
-                                    </tr>
+                                <?php } ?>
                                 </tbody>
                             </table>
                         </div>

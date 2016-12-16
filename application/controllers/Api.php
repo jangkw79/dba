@@ -39,8 +39,6 @@ class Api extends REST_Controller {
     }
 
     public function index_post() {
-        echo "ok~";
-
         $regdate = $this->regdate;
 
         if($this->post()) {
@@ -52,17 +50,36 @@ class Api extends REST_Controller {
         // Duplicate Check.
         $dup = $this->index_get($this->masterdb, $data);
 
+        $data["REGDATE"] = $regdate;
+        $this->rest->db->insert($this->masterdb, $data);
+        echo $this->rest->db->insert_id);
+print_r($data);
+            $this->set_response(null,REST_Controller::HTTP_OK);
+
         if($dup < 1) {
             $data["REGDATE"] = $regdate;
-            $res = $this->rest->db->insert($this->masterdb, $data);
+            $this->rest->db->insert($this->masterdb, $data);
+            echo $this->rest->db->insert_id);
+print_r($data);
             $this->set_response(null,REST_Controller::HTTP_OK);
-            echo "dup";
         } else {
             $this->set_response(null,REST_Controller::HTTP_CONFLICT);
             echo "not input";
         }
     }
+    public function complete_post() {
+        if($this->post()) {
+            foreach($this->post() as $k => $v) {
+                $data[$k]   = $v;
+            }
+        }
+        $condition = array("seq" => $this->post("seq"));
 
+        $res = $this->rest->db->update($this->masterdb, $data, $condition);
+        if($res) $this->set_response(null,REST_Controller::HTTP_OK);
+        echo "dup";
+
+    }
     public function index_get($tbl,$arr = false) {
         if($arr !== false) {
             $this->rest->db->select(" SEQ");
@@ -81,14 +98,23 @@ class Api extends REST_Controller {
                 $data[$k]   = $v;
             }
         }
+        // Duplicate Check.
+        $dup = $this->index_get($this->instances, $data);
+        if($dup < 1) {
+            $res = $this->rest->db->insert($this->instances, $data);
+            $this->set_response(null,REST_Controller::HTTP_OK);
+            echo "dup";
+        } else {
+            $this->set_response(null,REST_Controller::HTTP_CONFLICT);
+            echo "not input";
+        }
+/*
         $res = $this->rest->db->insert($this->instances, $data);
-
         if($res) {
             $this->set_response($res,REST_Controller::HTTP_OK);
         } else {
             $this->set_response($res,REST_Controller::HTTP_CONFLICT);
-        }
-
+        }*/
     }
 
     public function detail_post() {

@@ -25,11 +25,11 @@ class Dashboard_model extends CI_Model {
             $this->db->where($cond);
         }
     }
-
-    public function get_data($tbl, $cond=null, $regdate = null) {
+    public function query($sql) {
+        return $this->db->query($sql);
+    }
+    public function get_data($tbl, $cond=null) {
         if($cond !== null) { $this->where($cond); }
-        $regdate = (is_null($regdate)) ? today() : $regdate;
-        $this->where(array("DATE(REGDATE)" => $regdate));
         return $this->get($tbl);
     }
 
@@ -58,9 +58,14 @@ class Dashboard_model extends CI_Model {
     public function get_num() {
         return $this->query->num_rows();
     }
-    public function get_status($tbl="master", $cond) {
-        $this->db->from($this->{$tbl});
+    public function get_row($tbl="master", $cond=array(),$sort=array()) {
+        $this->db->from($tbl);
         $this->db->where($cond);
-        return $this->queryRow()->num_rows();
+        if(count($sort)>0) {
+            foreach($sort as $k => $v) {
+                $this->db->order_by($k,$v);
+            }
+        }
+        return $this->queryRow();
     }
 }

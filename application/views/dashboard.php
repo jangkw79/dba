@@ -53,32 +53,30 @@
                             </div>
                         </div>
                         <div clas="box-body">
+                            <?php $i=0; ?>
+                            <?php foreach($maria as $obj) {
+                                switch($obj->BACKUPSTATUS) {
+                                    case("S") :  $icon_stat = "fg-green"; break;
+                                    case("F") :  $icon_stat = "fg-red"; break;
+                                    default   :  $icon_stat = "fg-yellow"; break;
+                                }
+                            ?>
+                            <?php if($i++%4 == 0) { ?>
                             <ul class="users-list clearfix">
-                                <li><a href="/detail"><span class="mif-database mif-4x fg-green"></span><p><strong>Redmarker</strong></p></a></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>WCUS</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-yellow"></span><p><strong>Blacsom</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>100forest</strong></p></li>
+                            <?php } ?>
+                                <li><a href="/detail?dbname=<?php echo $obj->DBNAME;?>&seq=<?php echo $obj->seq; ?>"><span class="mif-database mif-4x <?php echo $icon_stat; ?>"></span><p><strong><?php echo $obj->DBNAME; ?></strong></p></a></li>
+                            <?php if($i%4 == 0) { ?>
                             </ul>
-                            <ul class="users-list clearfix">
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>outroshop</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>jinnykim</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>justjinny</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>global wizwid</strong></p></li>
-                            </ul>
-                            <ul class="users-list clearfix">
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>magento db1</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>magento db2</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>magento db3</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-red"></span><p><strong>magento db4</strong></p></li>
-                            </ul>
+                            <?php } ?>
+                            <?php } ?>
                         </div>
                         <div class="box-footer">
                             <div class="small-box text-center ">
-                                <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : 10 </span>
+                                <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : <?php echo $item["Maria"]["success"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : 1 </span>
+                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo count($maria)-$item["Maria"]["success"]-$item["Maria"]["fail"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : 1 </span>
+                                <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : <?php echo $item["Maria"]["fail"]; ?> </span>
                             </div>
                         </div>
                     </div>
@@ -92,32 +90,30 @@
                             </div>
                         </div>
                         <div clas="box-body no-padding">
-                            <ul class="users-list clearfix">
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>wizwid</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>recobell</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-yellow"></span><p><strong>wms</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-yellow"></span><p><strong>wizems</strong></p></li>
-                            </ul>
-                            <ul class="users-list clearfix">
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>cbutf8</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-yellow"></span><p><strong>dw</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>mango+</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>mango+ kr</strong></p></li>
-                            </ul>
-                            <ul class="users-list clearfix">
-                                <li><span class="mif-database mif-4x fg-red"></span><p><strong>oracle db</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>oracle db</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>oracle db</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>oracle db</strong></p></li>
-                            </ul>
+                            <?php $i=0; ?>
+                            <?php foreach($oracle as $obj) {
+                                switch($obj->BACKUPSTATUS) {
+                                    case("S") :  $icon_stat = "fg-green"; break;
+                                    case("F") :  $icon_stat = "fg-red"; break;
+                                    default   :  $icon_stat = "fg-yellow"; break;
+                                }
+                            ?>
+                                <?php if($i++%4 == 0) { ?>
+                                    <ul class="users-list clearfix">
+                                <?php } ?>
+                                <li><a href="/detail?seq=<?php echo $obj->seq; ?>"><span class="mif-database mif-4x <?php echo $icon_stat; ?>"></span><p><strong><?php echo @$obj->DBNAME; ?></strong></p></a></li>
+                                <?php if($i%4 == 0) { ?>
+                                    </ul>
+                                <?php } ?>
+                            <?php } ?>
                         </div>
                         <div class="box-footer">
                             <div class="small-box text-center ">
-                                <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : 8 </span>
+                                <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : <?php echo $item["Oracle"]["success"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : 3 </span>
+                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo count($oracle)-$item["Oracle"]["success"]-$item["Oracle"]["fail"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : 1 </span>
+                                <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : <?php echo $item["Oracle"]["fail"]; ?> </span>
                             </div>
                         </div>
                     </div>
@@ -131,32 +127,30 @@
                             </div>
                         </div>
                         <div clas="box-body">
-                            <ul class="users-list clearfix">
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>IR</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>netpion</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>itline</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>anysotre</strong></p></li>
-                            </ul>
-                            <ul class="users-list clearfix">
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>favinit</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>gsm</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>mssql db</strong></p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p><strong>mssql db</strong></p></li>
-                            </ul>
-                            <ul class="users-list clearfix">
-                                <li><span class="mif-database mif-4x fg-green"></span><p>mssql db</p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p>mssql db</p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p>mssql db</p></li>
-                                <li><span class="mif-database mif-4x fg-green"></span><p>mssql db</p></li>
-                            </ul>
+                            <?php $i=0; ?>
+                            <?php foreach($mssql as $obj) {
+                                switch($obj->BACKUPSTATUS) {
+                                    case("S") :  $icon_stat = "fg-green"; break;
+                                    case("F") :  $icon_stat = "fg-red"; break;
+                                    default   :  $icon_stat = "fg-yellow"; break;
+                                }
+                            ?>
+                                <?php if($i++%4 == 0) { ?>
+                                    <ul class="users-list clearfix">
+                                <?php } ?>
+                                <li><a href="/detail?seq=<?php echo $obj->seq; ?>"><span class="mif-database mif-4x <?php echo $icon_stat; ?>"></span><p><strong><?php echo @$obj->DBNAME; ?></strong></p></a></li>
+                                <?php if($i%4 == 0) { ?>
+                                    </ul>
+                                <?php } ?>
+                            <?php } ?>
                         </div>
                         <div class="box-footer">
                             <div class="small-box text-center ">
-                                <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : 12 </span>
+                                <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : <?php echo $item["Mssql"]["success"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : 0 </span>
+                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo @count($mssql)-$item["Mssql"]["success"]-$item["Mssql"]["fail"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : 0 </span>
+                                <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : <?php echo $item["Mssql"]["fail"]; ?> </span>
                             </div>
                         </div>
                     </div>

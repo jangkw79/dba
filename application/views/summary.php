@@ -3,7 +3,7 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3><?php echo count($instances); ?></h3>
+                <h3><?php echo $item["summary"]["instances"]; ?></h3>
 
                 <p>총 대상 </p>
             </div>
@@ -18,7 +18,7 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3><?php echo $s_status; ?></h3>
+                <h3><?php echo $item["summary"]["success"]; ?></h3>
                 <p>정상</p>
             </div>
             <div class="icon">
@@ -32,7 +32,7 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3>4</h3>
+                <h3><?php echo $item["summary"]["ing"]; ?></h3>
 
                 <p>진행 중</p>
             </div>
@@ -47,7 +47,7 @@
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-                <h3>2</h3>
+                <h3><?php echo $item["summary"]["fail"]; ?></h3>
 
                 <p>오류 내용 확인 필요</p>
             </div>

@@ -37,7 +37,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("div .box-tools.pull-right").remove();
-        $("div").find(".users-list > li span ").wrap("<a href='/detail'></a>");
 
         var expires = new Date(0);
         var flag = document.cookie.match(new RegExp('flag=([^;]+)'));
