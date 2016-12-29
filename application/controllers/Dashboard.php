@@ -53,13 +53,14 @@ class Dashboard extends CI_Controller {
         $data["item"] = $this->reordering($data["instances"]);
 
         $data["item"]["summary"]["instances"] = count($data["instances"]);
-        $data["item"]["summary"]["ing"] = $data["item"]["summary"]["instances"] - $data["item"]["summary"]["success"] - $data["item"]["summary"]["fail"];
+
 
         $this->load->view('dashboard',$data);
     }
 
     public function reordering($arg) {
         $data["Maria"]["success"] = $data["Oracle"]["success"] = $data["Mssql"]["success"] = 0;
+        $data["Maria"]["process"] = $data["Oracle"]["process"] = $data["Mssql"]["process"] = 0;
         $data["Maria"]["fail"] = $data["Oracle"]["fail"] = $data["Mssql"]["fail"] = 0;
         if(is_array($arg)) {
             foreach($arg as $k => $v) {
@@ -67,22 +68,26 @@ class Dashboard extends CI_Controller {
                     case("Maria") :
                         $data["Maria"][] = $v;
                         if($v->BACKUPSTATUS == "S") { $data["Maria"]["success"]++; }
+                        if($v->BACKUPSTATUS == "P") { $data["Maria"]["process"]++; }
                         if($v->BACKUPSTATUS == "F") { $data["Maria"]["fail"]++; }
                         break;
                     case("Oracle") :
                         $data["Oracle"][] = $v;
                         if($v->BACKUPSTATUS == "S") { $data["Oracle"]["success"]++; }
+                        if($v->BACKUPSTATUS == "P") { $data["Oracle"]["process"]++; }
                         if($v->BACKUPSTATUS == "F") { $data["Oracle"]["fail"]++; }
                         break;
                     case("Mssql") :
                         $data["Mssql"][] = $v;
                         if($v->BACKUPSTATUS == "S") { $data["Mssql"]["success"]++; }
-                        if($v->BACKUPSTATUS == "F") { $data["Maria"]["fail"]++; }
+                        if($v->BACKUPSTATUS == "P") { $data["Mssql"]["process"]++; }
+                        if($v->BACKUPSTATUS == "F") { $data["Mssql"]["fail"]++; }
                         break;
                 }
             }
         }
         $data["summary"]["success"] = $data["Maria"]["success"] + $data["Oracle"]["success"] + $data["Mssql"]["success"];
+        $data["summary"]["process"] = $data["Maria"]["process"] + $data["Oracle"]["process"] + $data["Mssql"]["process"];
         $data["summary"]["fail"] = $data["Maria"]["fail"] + $data["Oracle"]["fail"] + $data["Mssql"]["fail"];
         return $data;
     }

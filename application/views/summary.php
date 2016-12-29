@@ -32,7 +32,7 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3><?php echo $item["summary"]["ing"]; ?></h3>
+                <h3><?php echo $item["summary"]["process"]; ?></h3>
 
                 <p>진행 중</p>
             </div>

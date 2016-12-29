@@ -57,8 +57,9 @@
                             <?php foreach($maria as $obj) {
                                 switch($obj->BACKUPSTATUS) {
                                     case("S") :  $icon_stat = "fg-green"; break;
+                                    case("P") :  $icon_stat = "fg-yellow"; break;
                                     case("F") :  $icon_stat = "fg-red"; break;
-                                    default   :  $icon_stat = "fg-yellow"; break;
+                                    default   :  $icon_stat = "fg-green"; break;
                                 }
                             ?>
                             <?php if($i++%4 == 0) { ?>
@@ -74,7 +75,7 @@
                             <div class="small-box text-center ">
                                 <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : <?php echo $item["Maria"]["success"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo count($maria)-$item["Maria"]["success"]-$item["Maria"]["fail"]; ?> </span>
+                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo $item["Maria"]["process"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
                                 <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : <?php echo $item["Maria"]["fail"]; ?> </span>
                             </div>
@@ -111,7 +112,7 @@
                             <div class="small-box text-center ">
                                 <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : <?php echo $item["Oracle"]["success"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo count($oracle)-$item["Oracle"]["success"]-$item["Oracle"]["fail"]; ?> </span>
+                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo $item["Oracle"]["process"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
                                 <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : <?php echo $item["Oracle"]["fail"]; ?> </span>
                             </div>
@@ -148,7 +149,7 @@
                             <div class="small-box text-center ">
                                 <span class="text-blue"><i class="ion ion-android-cloud-done"></i> Success : <?php echo $item["Mssql"]["success"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
-                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo @count($mssql)-$item["Mssql"]["success"]-$item["Mssql"]["fail"]; ?> </span>
+                                <span class="text-yellow"><i class="ion ion-android-download"></i> Process : <?php echo $item["Mssql"]["process"]; ?> </span>
                                 <span style="padding-left:10px;"></span>
                                 <span class="text-red"><i class="ion ion-android-cloud"></i> Fail : <?php echo $item["Mssql"]["fail"]; ?> </span>
                             </div>

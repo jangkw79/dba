@@ -50,17 +50,10 @@ class Api extends REST_Controller {
         // Duplicate Check.
         $dup = $this->index_get($this->masterdb, $data);
 
-        $data["REGDATE"] = $regdate;
-        $this->rest->db->insert($this->masterdb, $data);
-        echo $this->rest->db->insert_id);
-print_r($data);
-            $this->set_response(null,REST_Controller::HTTP_OK);
-
         if($dup < 1) {
             $data["REGDATE"] = $regdate;
             $this->rest->db->insert($this->masterdb, $data);
-            echo $this->rest->db->insert_id);
-print_r($data);
+            echo $this->db->insert_id();
             $this->set_response(null,REST_Controller::HTTP_OK);
         } else {
             $this->set_response(null,REST_Controller::HTTP_CONFLICT);
@@ -73,12 +66,13 @@ print_r($data);
                 $data[$k]   = $v;
             }
         }
-        $condition = array("seq" => $this->post("seq"));
-
-        $res = $this->rest->db->update($this->masterdb, $data, $condition);
-        if($res) $this->set_response(null,REST_Controller::HTTP_OK);
-        echo "dup";
-
+        if($data["seq"]) {
+            $this->rest->db->where("seq",$data["seq"]);
+            $this->rest->db->update("Master", $data);
+            $this->set_response(null,REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(null,REST_Controller::HTTP_PRECONDITION_FAILED);
+        }
     }
     public function index_get($tbl,$arr = false) {
         if($arr !== false) {
